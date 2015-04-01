@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}
+    Rami
+{% endblock %}
+{% block content %}
+    <div class="ui-grid-a ui-responsive">
+    <div class="ui-block-a">
+    <div class="ui-body ui-body-a ui-corner-all">
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Nouvelle partie</h3>
+        <form method="post" action="/rami/newRami/" data-ajax="false">
+           {% csrf_token %}
+            Joueurs
+            <input type="radio" name="joueurs" id="radio-choice-1" value="3" data-mini="true" checked="checked">
+            <label for="radio-choice-1">Trois joueurs</label>
+            <div class="ui-grid-b">
+                <div class="ui-block-a">
+                            <input type="text" name="equipe1" id="equipe1" placeholder="Nom du joueur 1" data-mini="true">
+                </div>
+                <div class="ui-block-b">
+                            <input type="text" name="equipe2" id="equipe2" placeholder="Nom du joueur 2" data-mini="true">
+                </div>
+                <div class="ui-block-c">
+                            <input type="text" name="equipe3" id="equipe3" placeholder="Nom du joueur 3" data-mini="true">
+                </div>
+            </div>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                <input type="radio" name="joueurs" id="radio-choice-2" value="4" data-mini="true">
+                <label for="radio-choice-2">Quatre joueurs</label>
+                <input type="text" name="equipe4" id="equipe4" placeholder="Nom du joueur 4" data-mini="true">
+                </div>
+                <div class="ui-block-b">
+                <input type="radio" name="joueurs" id="radio-choice-3" value="5" data-mini="true">
+                <label for="radio-choice-3">Cinq joueurs</label>
+                <input type="text" name="equipe5" id="equipe5" placeholder="Nom du joueur 5" data-mini="true">
+                </div>
+            </div>
+            Fin de partie si ?
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                <input type="radio" name="typePartie" id="radio-choice-4" value="parties" checked="checked" data-mini="true">
+                <label for="radio-choice-4">Nombre de jeux réalisés</label>
+                <input type="range" name="parties" id="parties" min="1" max="20" value="10" data-highlight="true">
+                </div>
+                <div class="ui-block-b">
+                <input type="radio" name="typePartie" id="radio-choice-5" value="points" data-mini="true">
+                <label for="radio-choice-5">Nombre de points atteint par le perdant</label>
+                <input type="range" name="points" id="points" min="10" max="2000" value="1000" data-highlight="true">
+                </div>
+            </div>
+            <br/>
+            <input type="submit" data-icon="plus" value="Commencer la partie" data-theme="b"/>
+        </form>
+        </div>
+    </div>
+    <div class="ui-block-b">
+    <div class="ui-body ui-body-a ui-corner-all">
+    {% if message %}
+    <h3 class="ui-bar ui-bar-a ui-corner-all">Aucune partie</h3>
+    {% else %}
+    <h3 class="ui-bar ui-bar-a ui-corner-all">Mes parties</h3>
+      <ul data-role="listview" data-filter="true" data-filter-placeholder="Recherche de partie..." data-inset="true">
+        {% for partie in parties %}
+        <li>
+            <a href="/rami/selectPartie/{{ partie.key.integer_id }}/" data-ajax="false">
+            <h2>{{ partie.statusPartie }}</h2>
+            {% if partie.nombreJoueurs == 3 %}
+                <p><strong>
+                {{ partie.nomEquipe1 }} ({{ partie.pointsEquipe1 }}) / {{ partie.nomEquipe2 }} ({{ partie.pointsEquipe2 }}) / {{ partie.nomEquipe3 }} ({{ partie.pointsEquipe3 }})
+                </strong></p>
+            {% elif partie.nombreJoueurs == 4 %}
+                <p><strong>
+                {{ partie.nomEquipe1 }} ({{ partie.pointsEquipe1 }}) / {{ partie.nomEquipe2 }} ({{ partie.pointsEquipe2 }}) / {{ partie.nomEquipe3 }} ({{ partie.pointsEquipe3 }}) / {{ partie.nomEquipe4 }} ({{ partie.pointsEquipe4 }})
+                </strong></p>
+            {% else %}
+                <p><strong>
+                {{ partie.nomEquipe1 }} ({{ partie.pointsEquipe1 }}) / {{ partie.nomEquipe2 }} ({{ partie.pointsEquipe2 }}) / {{ partie.nomEquipe3 }} ({{ partie.pointsEquipe3 }}) / {{ partie.nomEquipe4 }} ({{ partie.pointsEquipe4 }}) / {{ partie.nomEquipe5 }} ({{ partie.pointsEquipe5 }})
+                </strong></p>
+            {% endif %}
+            <p>{{ partie.nombreMenes }} mènes ont étés jouées</p>
+            <p class="ui-li-aside ui-li-count">{{ partie.datePartie }}</p>
+            </a>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    </div>
+    </div>
+    </div>
+{% endblock %}
+{% block haut %}
+    <li><a href="/rami/partiesRami/" data-icon="bullets" class="ui-btn-active" data-theme="b" data-ajax="false">Mes parties</a></li>
+    <li><a href="/rami/encoursRami/" data-icon="action" data-theme="b" data-ajax="false">En cours</a></li>
+{% endblock %}
+

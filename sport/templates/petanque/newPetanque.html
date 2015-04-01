@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+    Pétanque
+{% endblock %}
+{% block content %}
+    <form method="post" action="/petanque/newPetanque/" data-ajax="false">
+       {% csrf_token %}
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Equipe / Joueurs</h3>
+        <input type="text" name="equipe1" id="equipe1" placeholder="Nom de l'équipe 1" data-mini="true">
+        <input type="text" name="equipe2" id="equipe2" placeholder="Nom de l'équipe 2" data-mini="true">
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Type de partie ?</h3>
+        <fieldset data-role="controlgroup" data-mini="true">
+            <input type="radio" name="typePartie" id="radio-choice-1" value="teteatete" checked="checked">
+            <label for="radio-choice-1">Tête à Tête</label>
+            <input type="radio" name="typePartie" id="radio-choice-2" value="doublette">
+            <label for="radio-choice-2">Doublette</label>
+            <input type="radio" name="typePartie" id="radio-choice-3" value="triplette">
+            <label for="radio-choice-3">Triplette</label>
+        </fieldset>
+        <br/>
+        <input type="submit" data-icon="plus" value="Commencer la partie" data-theme="b"/>
+    </form>
+{% endblock %}
+{% block haut %}
+    <li><a href="/petanque/partiesPetanque/" data-icon="bullets" data-theme="b" data-ajax="false">Mes parties</a></li>
+    <li><a href="/petanque/encoursPetanque/" data-icon="action" data-theme="b" data-ajax="false">En cours</a></li>
+{% endblock %}
+

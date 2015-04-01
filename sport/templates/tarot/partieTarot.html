@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+{% block title %}
+    Tarot
+{% endblock %}
+{% block content %}
+    {% if erreur %}
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Aucune partie de sélectionnée.</h3>
+    {% else %}
+        {% if partie.nombreJoueurs == 3 %}
+            {% if partie.statusPartie == 'En cours...' %}
+            <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <div class="ui-body ui-body-a ui-corner-all">
+            <h3 class="ui-bar ui-bar-a ui-corner-all">Nouveau jeux</h3>
+            <form method="post" action="/tarot/encoursTarot/" data-ajax="false">
+                {% csrf_token %}
+                <label for="preneur">Preneur...</label>
+                <select name="preneur" id="preneur" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="equipe1">{{ partie.nomEquipe1 }}</option>
+                    <option value="equipe2">{{ partie.nomEquipe2 }}</option>
+                    <option value="equipe3">{{ partie.nomEquipe3 }}</option>
+                </select>
+                <label for="contrat">Donne annoncée...</label>
+                <select name="contrat" id="contrat" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="1">Petite (x1)</option>
+                    <option value="2">Garde (x2)</option>
+                    <option value="4">Garde sans (x4)</option>
+                    <option value="6">Garde contre (x6)</option>
+                </select>
+                <label for="bouts">Bouts...</label>
+                <select name="bouts" id="bouts" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="56">0 bout (56 points)</option>
+                    <option value="51">1 bout (51 points)</option>
+                    <option value="41">2 bouts (41 points)</option>
+                    <option value="36">3 bouts (36 points)</option>
+                </select>
+                <label for="points">Points réalisés...</label>
+                <input type="range" name="points" id="points" min="0" max="91" value="0" data-highlight="true">
+                Annonces...
+                <select name="chelem" id="chelem" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Chelem...</option>
+                    <option value="400">Chelem annoncé et réalisé (400 points)</option>
+                    <option value="200">Chelem non annoncé mais réalisé (200 points)</option>
+                    <option value="-200">Chelem annoncé mais non réalisé (-200 points)</option>
+                </select>
+                <select name="poignee" id="poignee" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Poignée...</option>
+                    <option value="20">Une "Simple poignée" (13 Atouts)</option>
+                    <option value="30">Une "Double poignée" (15 Atouts)</option>
+                    <option value="40">Une "Triple poignée" (18 Atouts)</option>
+                </select>
+                <select name="petit" id="petit" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Petit au bout...</option>
+                    <option value="10">Réalisé par les preneurs</option>
+                    <option value="-10">Réalisé par les défenseurs</option>
+                </select>
+                <input type="submit" data-icon="plus" value="Ajouter le jeux" data-theme="b"/>
+            </form>
+            </div>
+            </div>
+            <div class="ui-block-b">        
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">Jeux de la partie : {{ partie.nombreMenes }}</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                        <th data-priority="1">(-)</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                        <td><a href="/tarot/suprimeTarot/{{ mene.key.integer_id }}/" data-ajax="false">Supprimer le jeux</a>
+                        </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            </div>
+            </div>
+            {% else %}
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">Jeux de la partie : {{ partie.nombreMenes }}</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            {% endif %}
+        {% elif partie.nombreJoueurs == 4 %}
+            {% if partie.statusPartie == 'En cours...' %}
+            <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <div class="ui-body ui-body-a ui-corner-all">
+            <h3 class="ui-bar ui-bar-a ui-corner-all">Nouveau jeux</h3>
+            <form method="post" action="/tarot/encoursTarot/" data-ajax="false">
+                {% csrf_token %}
+                <label for="preneur">Preneur...</label>
+                <select name="preneur" id="preneur" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="equipe1">{{ partie.nomEquipe1 }}</option>
+                    <option value="equipe2">{{ partie.nomEquipe2 }}</option>
+                    <option value="equipe3">{{ partie.nomEquipe3 }}</option>
+                    <option value="equipe4">{{ partie.nomEquipe4 }}</option>
+                </select>
+                <label for="contrat">Donne annoncée...</label>
+                <select name="contrat" id="contrat" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="1">Petite (x1)</option>
+                    <option value="2">Garde (x2)</option>
+                    <option value="4">Garde sans (x4)</option>
+                    <option value="6">Garde contre (x6)</option>
+                </select>
+                <label for="bouts">Bouts...</label>
+                <select name="bouts" id="bouts" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="56">0 bout (56 points)</option>
+                    <option value="51">1 bout (51 points)</option>
+                    <option value="41">2 bouts (41 points)</option>
+                    <option value="36">3 bouts (36 points)</option>
+                </select>
+                <label for="points">Points réalisés...</label>
+                <input type="range" name="points" id="points" min="0" max="91" value="0" data-highlight="true">
+                Annonces...
+                <select name="chelem" id="chelem" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Chelem...</option>
+                    <option value="400">Chelem annoncé et réalisé (400 points)</option>
+                    <option value="200">Chelem non annoncé mais réalisé (200 points)</option>
+                    <option value="-200">Chelem annoncé mais non réalisé (-200 points)</option>
+                </select>
+                <select name="poignee" id="poignee" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Poignée...</option>
+                    <option value="20">Une "Simple poignée" (10 Atouts)</option>
+                    <option value="40">Deux "Simple poignée" (10 Atouts)</option>
+                    <option value="30">Une "Double poignée" (13 Atouts)</option>
+                    <option value="40">Une "Triple poignée" (15 Atouts)</option>
+                </select>
+                <select name="petit" id="petit" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Petit au bout...</option>
+                    <option value="10">Réalisé par les preneurs</option>
+                    <option value="-10">Réalisé par les défenseurs</option>
+                </select>
+                <input type="submit" data-icon="plus" value="Ajouter le jeux" data-theme="b"/>
+            </form>
+            </div>
+            </div>
+            <div class="ui-block-b">        
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">{{ partie.statusPartie }}<br/>{{ partie.nombreMenes }} jeux jouées</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe4 }}<br/>{{ partie.pointsEquipe4 }} points</th>
+                        <th data-priority="1">(-)</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe4 }}
+                         </td>
+                        <td><a href="/tarot/suprimeTarot/{{ mene.key.integer_id }}/" data-ajax="false">Supprimer le jeux</a>
+                        </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            </div>
+            </div>
+            {% else %}
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">{{ partie.statusPartie }}<br/>{{ partie.nombreMenes }} jeux jouées</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe4 }}<br/>{{ partie.pointsEquipe4 }} points</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe4 }}
+                         </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            {% endif %}
+        {% else %}
+            {% if partie.statusPartie == 'En cours...' %}
+            <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <div class="ui-body ui-body-a ui-corner-all">
+            <h3 class="ui-bar ui-bar-a ui-corner-all">Nouveau jeux</h3>
+            <form method="post" action="/tarot/encoursTarot/" data-ajax="false">
+                {% csrf_token %}
+                <label for="preneur">Preneur...</label>
+                <select name="preneur" id="preneur" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="equipe1">{{ partie.nomEquipe1 }}</option>
+                    <option value="equipe2">{{ partie.nomEquipe2 }}</option>
+                    <option value="equipe3">{{ partie.nomEquipe3 }}</option>
+                    <option value="equipe4">{{ partie.nomEquipe4 }}</option>
+                    <option value="equipe5">{{ partie.nomEquipe5 }}</option>
+                </select>
+                <label for="appele">Appelé...</label>
+                <select name="appele" id="appele" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="equipe1">{{ partie.nomEquipe1 }}</option>
+                    <option value="equipe2">{{ partie.nomEquipe2 }}</option>
+                    <option value="equipe3">{{ partie.nomEquipe3 }}</option>
+                    <option value="equipe4">{{ partie.nomEquipe4 }}</option>
+                    <option value="equipe5">{{ partie.nomEquipe5 }}</option>
+                </select>
+                <label for="contrat">Donne annoncée...</label>
+                <select name="contrat" id="contrat" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="1">Petite (x1)</option>
+                    <option value="2">Garde (x2)</option>
+                    <option value="4">Garde sans (x4)</option>
+                    <option value="6">Garde contre (x6)</option>
+                </select>
+                <label for="bouts">Bouts...</label>
+                <select name="bouts" id="bouts" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="56">0 bout (56 points)</option>
+                    <option value="51">1 bout (51 points)</option>
+                    <option value="41">2 bouts (41 points)</option>
+                    <option value="36">3 bouts (36 points)</option>
+                </select>
+                <label for="points">Points réalisés...</label>
+                <input type="range" name="points" id="points" min="0" max="91" value="0" data-highlight="true">
+                Annonces...
+                <select name="chelem" id="chelem" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Chelem...</option>
+                    <option value="400">Chelem annoncé et réalisé (400 points)</option>
+                    <option value="200">Chelem non annoncé mais réalisé (200 points)</option>
+                    <option value="-200">Chelem annoncé mais non réalisé (-200 points)</option>
+                </select>
+                <select name="poignee" id="poignee" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Poignée...</option>
+                    <option value="20">Une "Simple poignée" (8 Atouts)</option>
+                    <option value="40">Deux "Simple poignée" (8 Atouts)</option>
+                    <option value="30">Une "Double poignée" (10 Atouts)</option>
+                    <option value="60">Deux "Double poignée" (10 Atouts)</option>
+                    <option value="40">Une "Triple poignée" (13 Atouts)</option>
+                </select>
+                <select name="petit" id="petit" data-icon="carat-d" data-iconpos="left" data-mini="true">
+                    <option value="0">Petit au bout...</option>
+                    <option value="10">Réalisé par les preneurs</option>
+                    <option value="-10">Réalisé par les défenseurs</option>
+                </select>
+                <input type="submit" data-icon="plus" value="Ajouter le jeux" data-theme="b"/>
+            </form>
+            </div>
+            </div>
+            <div class="ui-block-b">        
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">Jeux de la partie : {{ partie.nombreMenes }}</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe4 }}<br/>{{ partie.pointsEquipe4 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe5 }}<br/>{{ partie.pointsEquipe5 }} points</th>
+                        <th data-priority="1">(-)</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe4 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe5 }}
+                         </td>
+                        <td><a href="/tarot/suprimeTarot/{{ mene.key.integer_id }}/" data-ajax="false">Supprimer le jeux</a>
+                        </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            </div>
+            </div>
+            {% else %}
+            <div class="ui-body ui-body-a ui-corner-all">
+                <h3 class="ui-bar ui-bar-a ui-corner-all">{{ partie.statusPartie }}<br/>{{ partie.nombreMenes }} jeux jouées</h3>
+                <table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Affichage..." data-column-popup-theme="a">
+                    <thead>
+                       <tr class="ui-bar-d">
+                         <th data-priority="1">{{ partie.nomEquipe1 }}<br/>{{ partie.pointsEquipe1 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe2 }}<br/>{{ partie.pointsEquipe2 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe3 }}<br/>{{ partie.pointsEquipe3 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe4 }}<br/>{{ partie.pointsEquipe4 }} points</th>
+                         <th data-priority="1">{{ partie.nomEquipe5 }}<br/>{{ partie.pointsEquipe5 }} points</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                        {% for mene in menes %}
+                       <tr>
+                         <td>{{ mene.pointsEquipe1 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe2 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe3 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe4 }}
+                         </td>
+                         <td>{{ mene.pointsEquipe5 }}
+                         </td>
+                       </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+{% block haut %}
+    <li><a href="/tarot/partiesTarot/" data-icon="bullets" data-theme="b" data-ajax="false">Mes parties</a></li>
+    <li><a href="/tarot/encoursTarot/" data-icon="action" class="ui-btn-active" data-theme="b" data-ajax="false">En cours</a></li>
+{% endblock %}
+

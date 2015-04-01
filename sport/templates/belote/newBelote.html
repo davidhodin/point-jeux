@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+    Belote
+{% endblock %}
+{% block content %}
+        <form method="post" action="/belote/newBelote/" data-ajax="false">
+       {% csrf_token %}
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Equipe / Joueurs</h3>
+        <input type="text" name="equipe1" id="equipe1" placeholder="Nom de l'équipe 1" data-mini="true">
+        <input type="text" name="equipe2" id="equipe2" placeholder="Nom de l'équipe 2" data-mini="true">
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Fin de partie si ?</h3>
+        <input type="radio" name="typePartie" id="radio-choice-1" value="parties" checked="checked" data-mini="true">
+        <label for="radio-choice-1">Nombre de jeux réalisés</label>
+        <input type="range" name="parties" id="parties" min="1" max="20" value="10" data-highlight="true">
+        <input type="radio" name="typePartie" id="radio-choice-2" value="points" data-mini="true">
+        <label for="radio-choice-2">Nombre de points atteint</label>
+        <input type="range" name="points" id="points" min="80" max="2000" value="1000" data-highlight="true">
+        <br/>
+        <input type="submit" data-icon="plus" value="Commencer la partie" data-theme="b"/>
+    </form>
+{% endblock %}
+{% block haut %}
+    <li><a href="/belote/partiesBelote/" data-icon="bullets" data-theme="b" data-ajax="false">Mes parties</a></li>
+    <li><a href="/belote/encoursBelote/" data-icon="action" data-theme="b" data-ajax="false">En cours</a></li>
+{% endblock %}
+

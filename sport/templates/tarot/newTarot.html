@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+    Tarot
+{% endblock %}
+{% block content %}
+    <form method="post" action="/tarot/newTarot/" data-ajax="false">
+       {% csrf_token %}
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Joueurs</h3>
+        <input type="radio" name="joueurs" id="radio-choice-1" value="3" data-mini="true" checked="checked">
+        <label for="radio-choice-1">Trois joueurs</label>
+        <input type="text" name="equipe1" id="equipe1" placeholder="Nom du joueur 1" data-mini="true">
+        <input type="text" name="equipe2" id="equipe2" placeholder="Nom du joueur 2" data-mini="true">
+        <input type="text" name="equipe3" id="equipe3" placeholder="Nom du joueur 3" data-mini="true">
+        <input type="radio" name="joueurs" id="radio-choice-2" value="4" data-mini="true">
+        <label for="radio-choice-2">Quatre joueurs</label>
+        <input type="text" name="equipe4" id="equipe4" placeholder="Nom du joueur 4" data-mini="true">
+        <input type="radio" name="joueurs" id="radio-choice-3" value="5" data-mini="true">
+        <label for="radio-choice-3">Cinq joueurs</label>
+        <input type="text" name="equipe5" id="equipe5" placeholder="Nom du joueur 5" data-mini="true">
+
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Fin de partie si ?</h3>
+        <input type="radio" name="typePartie" id="radio-choice-4" value="parties" checked="checked" data-mini="true">
+        <label for="radio-choice-4">Nombre de jeux réalisés</label>
+        <input type="range" name="parties" id="parties" min="1" max="20" value="10" data-highlight="true">
+        <input type="radio" name="typePartie" id="radio-choice-5" value="points" data-mini="true">
+        <label for="radio-choice-5">Nombre de points atteint</label>
+        <input type="range" name="points" id="points" min="10" max="2000" value="1000" data-highlight="true">
+        <br/>
+        <input type="submit" data-icon="plus" value="Commencer la partie" data-theme="b"/>
+    </form>
+{% endblock %}
+{% block haut %}
+    <li><a href="/tarot/partiesTarot/" data-icon="bullets" data-theme="b" data-ajax="false">Mes parties</a></li>
+    <li><a href="/tarot/encoursTarot/" data-icon="action" data-theme="b" data-ajax="false">En cours</a></li>
+    <li><a href="/tarot/newTarot/" data-icon="plus" class="ui-btn-active" data-theme="b" data-ajax="false">Nouvelle partie</a></li>
+{% endblock %}
+

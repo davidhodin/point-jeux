@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}
+  
+{% endblock %}
+{% block content %}
+   <div id="fb-root"></div>
+  <script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+    <div class="ui-body ui-body-a ui-corner-all">
+      <br/>
+      <ul data-role="listview">
+        <li>
+          <a href="/belote/" data-icon="carat-d" data-ajax="false">
+              <h2>Belote ({{ partiesBelote }} parties jouées)</h2>
+              <p>Gérer mes parties de belote avec ou sans annonces...</p>
+          </a>
+        </li>
+        <li>
+          <a href="/tarot/" data-icon="carat-d" data-ajax="false">
+              <h2>Tarot ({{ partiesTarot }} parties jouées)</h2>
+              <p>Gérer mes parties de tarot de 3 à 5 joueurs...</p>
+          </a>
+        </li>
+        <li>
+          <a href="/petanque/" data-icon="carat-d" data-ajax="false">
+              <h2>Pétanque ({{ partiesPetanque }} parties jouées)</h2>
+              <p>Gérer mes parties de pétanque...</p>
+          </a>
+        </li>
+        <li>
+          <a href="/rami/" data-icon="carat-d" data-ajax="false">
+              <h2>Rami ({{ partiesRami }} parties jouées)</h2>
+              <p>Gérer mes parties de rami de 3 à 5 joueurs...</p>
+          </a>
+        </li>
+      </ul>
+      <br/>
+    </div>
+      <div class="fb-like" data-href="http://www.points-jeux.com/" data-layout="standard" data-action="recommend" data-show-faces="true" data-share="true"></div><br/>
+        <div class="g-plus" data-action="share"></div>
+        <script type="text/javascript">
+          window.___gcfg = {lang: 'fr'};
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script><br/>    
+      <a href="mailto:?subject=Gestion de points en ligne&body=Je te conseille le site gratuit de gestion de points en ligne http://www.points-jeux.com pour les points de belote, tarot, pétanque et rami." class="ui-btn ui-icon-mail ui-btn-icon-left ui-shadow-icon ui-btn-a ui-corner-all" data-ajax="false">Partager avec mes amis...</a>
+{% endblock %}
+{% block haut %}
+    <li><a href="/" data-theme="b" data-icon="home" class="ui-btn-active" data-ajax="false">Accueil</a></li>
+    <li><a href="/informations/regles/" data-theme="b" data-icon="comment" data-ajax="false">Règles</a></li>
+    <li><a href="/informations/configuration/" data-theme="b" data-icon="gear" data-ajax="false">A propos...</a></li>
+{% endblock %}
+

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+    Aide
+{% endblock %}
+{% block content %}
+    <div class="ui-body ui-body-a ui-corner-all">
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Versions...</h3>
+            -  19 Juillet 2014 - Version 0.1 (béta)<br/>
+            -  23 Août 2014 - Version 0.2 (béta)<br/>
+            -  12 Janvier 2015 - Version 0.3 (béta)<br/>
+            -  31 Janvier 2015 - Version 0.4 (béta)<br/>
+            -  1 Mars 2015 - Version 0.5 (béta)<br/>
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Bugs, Remarques...</h3>
+            <a href="mailto:dhodin@yahoo.com" class="ui-btn ui-icon-mail ui-btn-icon-left ui-shadow-icon ui-btn-b ui-corner-all" data-ajax="false">Cliquer ici pour m'envoyer un e-mail</a>
+    </div>
+{% endblock %}
+{% block haut %}
+    <li><a href="/" data-theme="b" data-icon="home" data-ajax="false">Accueil</a></li>
+    <li><a href="/informations/regles/" data-theme="b" data-icon="comment" data-ajax="false">Règles</a></li>
+    <li><a href="/informations/configuration/" data-theme="b" data-icon="gear" class="ui-btn-active" data-ajax="false">A propos...</a></li>
+{% endblock %}
+

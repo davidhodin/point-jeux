@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>Points Belote Tarot Pétanque</title>
+		<!-- Balises de description du site -->
+		<meta name="author" lang="fr" content="david hodin">
+		<meta name="keywords" content="points belote tarot rami pétanque">
+		<meta name="reply-to" content="dhodin@yahoo.com">
+		<meta name="category" content="jeux">
+		<meta name="distribution" content="global">
+		<meta name="Description" content="Outil web pour la gestion de vos parties de Belote, de Tarot, de Rami et de Pétanque">
+		<!-- Balises du Framework JQuery Mobile -->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+		<meta name="google-translate-customization" content="b6727a12b33ad0b0-b440755a182bc21d-g485a9b1c892450ae-13"></meta>
+	</head>
+	<body>
+		<div data-role="page" id="page1">
+			<div data-role="panel" id="mypanel" data-position="right" data-display="push" data-theme="a">
+				<a href="/" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left" data-ajax="false">Accueil</a>
+				<div data-role="controlgroup" data-theme="a">
+					<a href="/belote/" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-left" data-ajax="false">Belote</a>
+					<a href="/tarot/" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-left" data-ajax="false">Tarot</a>
+					<a href="/petanque/" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-left" data-ajax="false">Pétanque</a>
+					<a href="/rami/" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-left" data-ajax="false">Rami</a>
+				</div>
+				<a href="{{ urlconnecte }}" class="ui-btn ui-corner-all ui-icon-power ui-btn-icon-left" data-ajax="false">Déconnexion</a>
+			</div>
+			<div data-role="header" data-position="fixed" data-theme="a">
+				<h1>
+				{% block title %}
+				{% endblock %}
+				</h1>
+				<a href="#mypanel" data-icon="bars" class="ui-btn-right">Menu</a>
+				<div data-role="navbar" data-iconpos="top" data-theme="b">
+					<ul>
+					{% block haut %}
+					{% endblock %}
+		            </ul>
+				</div>
+			</div>
+			<div data-role="content">
+				{% block content %}
+				{% endblock %}	
+			</div>
+			<div data-role="footer" data-position="fixed">
+				<div id="google_translate_element"></div><script type="text/javascript">
+				function googleTranslateElementInit() {
+				  new google.translate.TranslateElement({pageLanguage: 'fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+				}
+				</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>			
+			</div>
+		</div>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-10659110-31', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</body>
+</html>

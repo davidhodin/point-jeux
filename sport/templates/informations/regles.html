@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    Aide
+{% endblock %}
+{% block content %}
+    <div class="ui-body ui-body-a ui-corner-all">
+        <h3 class="ui-bar ui-bar-a ui-corner-all">Règles...</h3>
+        <br/>
+        <ul data-role="listview">
+            <li><a href="http://www.ffbelote.org/regles-officielle-belote/">Règle officielle de la belote</a></li>
+            <li><a href="http://fftarot.fr/assets/documents/R-RO201306.pdf">Règle officielle du tarot</a></li>
+            <li><a href="http://www.fipjp.com/userfiles/file/REGLEMENTS/Reglement_de_jeu_p%C3%A9tanque_officiel_2010.pdf">Règle officielle de la pétanque</a></li>
+            <li><a href="http://fr.wikipedia.org/wiki/Rami">Règle officielle du rami</a></li>
+        </ul>
+        <br/>
+    </div>
+{% endblock %}
+{% block haut %}
+    <li><a href="/" data-icon="home" data-theme="b" data-ajax="false">Accueil</a></li>
+    <li><a href="/informations/regles/" data-icon="comment" class="ui-btn-active" data-theme="b" data-ajax="false">Règles</a></li>
+    <li><a href="/informations/configuration/" data-icon="gear" data-theme="b" data-ajax="false">A propos...</a></li>
+{% endblock %}
+
